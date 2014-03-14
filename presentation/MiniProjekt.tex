@@ -1,0 +1,94 @@
+\documentclass{beamer}
+\usetheme{Pittsburgh} 
+%\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{default}
+%\usepackage{natbib}
+\usepackage{listings}
+%\usepackage{fontspec}
+\DeclareFontShape{OT1}{cmtt}{bx}{n}{<5><6><7><8><9><10><10.95><12><14.4><17.28><20.74><24.88>cmttb10}{}
+
+\lstset{language=C++,
+                basicstyle=\ttfamily\footnotesize,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}}
+
+\begin{document}
+
+\title{Interfaces for Youbot-py}
+\author{
+  Naazare, Menaka \texttt{mnksnz@gmail.com}
+  \\ \and
+  Quignon, Christophe
+  \texttt{cuignon@gmail.com}
+}
+\institute{Hochschule Bonn Rhein Sieg}
+\date{\today}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+%CONTENTS
+%
+%PROBLEM
+%REQUIRERMENTS
+%DESIGN
+%CODE
+%TESTING
+
+%
+%boostpython
+%c++
+%pyhton
+
+%
+%ROSCODE in py move()
+%
+%Define example interface move()
+%find the matching functions ind youbot-py
+%find corresponding functions in the youbot driver
+%define missing interfaces
+%implement them
+%
+\begin{frame}
+\frametitle{Motivation}
+\framesubtitle{}
+C++ is complicated and cumbersome because of its age. Python is readable and concise.\\
+The basic youbot driver is written in C++, so we are going to access the Youbot through a Python interface.\\[\baselineskip]
+In this mini project we aim to test the youbot-py with our own interface and improve the library with missing parts.  
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Approach}
+\framesubtitle{}
+  \begin{enumerate}   \item PROBLEM
+   \begin{itemize}  \item define example interface (like \texttt{move(x, y, z)})   \end{itemize}
+   \item REQUIREMENTS
+   \begin{itemize}    
+    \item find the matching functions in youbot-py 
+    \item find corresponding functions in the youbot driver 
+   \end{itemize}
+   \item DESIGN \begin{itemize} \item define missing interfaces \end{itemize}
+   \item CODE
+   \item TEST
+  \end{enumerate}
+
+\end{frame}
+
+
+%\begin{frame}
+%        \frametitle{Reference}
+%        \bibliographystyle{amsalpha}%amsalpha
+%        \bibliography{precoursebib.bib} 
+%\end{frame}
+
+
+%\begin{lstlisting}[language=C++]
+
+
+\end{document}
