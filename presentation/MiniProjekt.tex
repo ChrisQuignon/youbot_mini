@@ -12,7 +12,7 @@
 \DeclareFontShape{OT1}{cmtt}{bx}{n}{<5><6><7><8><9><10><10.95><12><14.4><17.28><20.74><24.88>cmttb10}{}
 
 \lstset{language=C++,
-                basicstyle=\ttfamily\footnotesize,
+                basicstyle=\ttfamily\scriptsize,
                 keywordstyle=\color{blue}\ttfamily,
                 stringstyle=\color{red}\ttfamily,
                 commentstyle=\color{green}\ttfamily,
@@ -80,7 +80,7 @@ In this mini project, we aim to test the youbot-py with our own interface and im
 \frametitle{Approach}
 \framesubtitle{}
   \begin{enumerate}   \item PROBLEM
-   \begin{itemize}  \item define example interface (like \texttt{move(x, y, z)})   \end{itemize}
+   \begin{itemize}  \item define example interface\end{itemize}
    \item REQUIREMENTS
    \begin{itemize}    
     \item find the matching functions in youbot-py 
@@ -100,6 +100,20 @@ In this mini project, we aim to test the youbot-py with our own interface and im
 %State diagram
 %Components
 %CLass Diagram
+
+\begin{frame}
+\frametitle{Problem}
+  \framesubtitle{Define Example Interface}
+  Provide basic acces to the youbots gripper.\\
+  That is:
+  \begin{itemize}
+   \item open
+   \item close
+   \item open with a given angle 
+  \end{itemize}
+
+\end{frame}
+
 
 
 \begin{frame}
@@ -125,8 +139,42 @@ In this mini project, we aim to test the youbot-py with our own interface and im
   Grasp     & GripperOpen & GripperClose & GripperCalibrate \\
   
 \end{tabular}
-
 \end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Requirements}
+ \framesubtitle{youbot\_py}
+\begin{lstlisting}[language=C++]
+...
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+ \frametitle{Requirements}
+ \framesubtitle{youbot\_driver\textbackslash youbotgripper.hpp}
+\begin{lstlisting}[language=C++]
+public:
+    virtual void setConfigurationParameter
+       (const CalibrateGripper& parameter);
+    virtual void getConfigurationParameter
+       (GripperFirmwareVersion& parameter) const;
+    void open();
+    void close();
+    
+    /*for later implementation*/
+    virtual void getConfigurationParameter
+       (YouBotSlaveMailboxMsg& parameter) const;
+    virtual void setData
+       (const GripperBarSpacingSetPoint& barSpacing);
+    virtual void getData
+       (GripperSensedBarSpacing& barSpacing) const;
+    YouBotGripperBar& getGripperBar1();
+    YouBotGripperBar& getGripperBar2();
+ \end{lstlisting}
+\end{frame}
+
+
 
 \begin{frame}
  \frametitle{Design}
@@ -207,15 +255,24 @@ BOOST_PYTHON_MODULE(youbot)
       .def("setData", &Gripper::getData)
       .def("open", &Gripper::open)
       .def("close", &Gripper::close)
-      .def("setConfigurationParameter", &Gripper::setConfigurationParameter)
+      .def("setConfigurationParameter"
+         &Gripper::setConfigurationParameter)
       /*for later implementation*/
-      /*.def("getConfigurationParameter", &Gripper::getConfigurationParameter)
+      /*.def("getConfigurationParameter",
+         &Gripper::getConfigurationParameter)
       .def("getGripperBar1", &Gripper::getGripperBar1)
       .def("getGripperBar2", &Gripper::getGripperBar2)
-      .def("setValueToMotorContoller", &Gripper::setValueToMotorContoller)
-      .def("retrieveValueFromMotorContoller", &Gripper::retrieveValueFromMotorContoller)
+      .def("setValueToMotorContoller",
+         &Gripper::setValueToMotorContoller)
+      .def("retrieveValueFromMotorContoller",
+         &Gripper::retrieveValueFromMotorContoller)
       */
 \end{lstlisting} 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Test}
+ \framesubtitle{Live Demo}
 \end{frame}
 
 
