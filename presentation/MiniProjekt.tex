@@ -134,9 +134,9 @@ In this mini project, we aim to test the youbot-py with our own interface and im
  \framesubtitle{Transition Diagramm}
  \begin{tabular}{ l | c c c }
             & Opened & Closed & Grasped \\ \hline
-  Open      & x & GripperClose & GripperCalibrate \\
-  Close     & GripperOpen & x  & GripperCalibrate \\
-  Grasp     & GripperOpen & GripperClose & GripperCalibrate \\
+  Opened      & x & GripperClose & GripperCalibrate(x) \\
+  Closed     & GripperOpen & x  & GripperCalibrate(x) \\
+  Grasp     & GripperOpen & GripperClose & GripperCalibrate(x) \\
   
 \end{tabular}
 \end{frame}
@@ -149,29 +149,58 @@ In this mini project, we aim to test the youbot-py with our own interface and im
 \end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile]
+ \frametitle{Requirements}
+ \framesubtitle{youbot-py\textbackslash src\textbackslash libbinding\textbackslash binding.h}
+\begin{lstlisting}[language=C++]
+#include <youbot/YouBotManipulator.hpp>
+class Arm
+{
+public :
+	/*[..]*/
+	void GripperOpen(){this->youBotArm->getArmGripper().open();};
+	void GripperClose(){this->youBotArm->getArmGripper().close();};
+};
+\end{lstlisting}
+\end{frame}
+
 
 \begin{frame}[fragile]
  \frametitle{Requirements}
- \framesubtitle{youbot\_driver\textbackslash youbotgripper.hpp}
+ \framesubtitle{youbot-py\textbackslash src\textbackslash libbinding\textbackslash binding.cpp}
 \begin{lstlisting}[language=C++]
-public:
-    virtual void setConfigurationParameter
-       (const CalibrateGripper& parameter);
-    virtual void getConfigurationParameter
-       (GripperFirmwareVersion& parameter) const;
-    void open();
-    void close();
-    
-    /*for later implementation*/
-    virtual void getConfigurationParameter
-       (YouBotSlaveMailboxMsg& parameter) const;
-    virtual void setData
-       (const GripperBarSpacingSetPoint& barSpacing);
-    virtual void getData
-       (GripperSensedBarSpacing& barSpacing) const;
-    YouBotGripperBar& getGripperBar1();
-    YouBotGripperBar& getGripperBar2();
+//Initialization
+Arm::Arm() {
+
+	this->youBotArm =
+	   new youbot::YouBotManipulator("youbot-manipulator");
+	this->youBotArm->doJointCommutation();
+	this->youBotArm->calibrateManipulator();
+	this->youBotArm->calibrateGripper();
+
+	calib = 0;
+	invalidate_calib = 0;
+}
  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Requirements}
+ \framesubtitle{youbot-py\textbackslash src\textbackslash libbinding\textbackslash binding.cpp}
+\begin{lstlisting}[language=C++]
+//Linking
+BOOST_PYTHON_MODULE(youbot)
+{
+    using namespace boost::python;
+    numeric::array::set_module_and_type("numpy", "ndarray"); 
+    import_array();
+    class_<YOUBOTPYTHON::Arm, boost::noncopyable>("arm",init<>())
+
+	/*[..]*/
+	.def("GripperOpen", &Arm::GripperOpen)
+	.def("GripperClose", &Arm::GripperClose)
+	.def("Reset", &Arm::Reset);
+\end{lstlisting}
 \end{frame}
 
 
