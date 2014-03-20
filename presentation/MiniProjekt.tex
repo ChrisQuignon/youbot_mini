@@ -143,12 +143,22 @@ In this mini project, we aim to test the youbot-py with our own interface and im
 
 \begin{frame}[fragile]
  \frametitle{Requirements}
- \framesubtitle{youbot\_py}
+ \framesubtitle{Youbot\_py}
 \begin{lstlisting}[language=C++]
 ...
 \end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile]
+ \frametitle{Requirements}
+ \framesubtitle{Youbot Driver}
+ \begin{lstlisting}[language=C++]
+//calibrate the reference position of the arm joints
+    void calibrateManipulator(const bool forceCalibration = false);
+
+    void calibrateGripper(const bool forceCalibration = false);
+\end{lstlisting}
+\end{frame}
 
 
 
@@ -174,11 +184,26 @@ In this mini project, we aim to test the youbot-py with our own interface and im
  \framesubtitle{Class Diagram}
   \begin{figure}[ht!]
   \centering
-  \includegraphics[width=70mm]{img/classdiagramm.png}
+  \includegraphics[width=64mm]{img/classdiagramm.png}
   \caption{}
   \label{Class Diagram}
   \end{figure}
  
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Code}
+ \framesubtitle{youbot-py\textbackslash src\textbackslash libbinding\textbackslash binding.h}
+\begin{lstlisting}[language=C++]
+#include <youbot/YouBotManipulator.hpp>
+class Arm
+{
+public :
+	/*[..]*/
+	void GripperOpen(){this->youBotArm->getArmGripper().open();};
+	void GripperClose(){this->youBotArm->getArmGripper().close();};
+};
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -219,20 +244,7 @@ BOOST_PYTHON_MODULE(youbot)
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]
- \frametitle{Code}
- \framesubtitle{youbot-py\textbackslash src\textbackslash libbinding\textbackslash binding.h}
-\begin{lstlisting}[language=C++]
-#include <youbot/YouBotManipulator.hpp>
-class Arm
-{
-public :
-	/*[..]*/
-	void GripperOpen(){this->youBotArm->getArmGripper().open();};
-	void GripperClose(){this->youBotArm->getArmGripper().close();};
-};
-\end{lstlisting}
-\end{frame}
+
 
 
 \begin{frame}
