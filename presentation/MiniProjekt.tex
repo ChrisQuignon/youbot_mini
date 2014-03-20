@@ -120,11 +120,11 @@ In this mini project we aim to test the youbot-py with our own interface and imp
  \framesubtitle{Transition Diagramm}
 
  \begin{tabular}{ l | c c c c }
-            & Action & Detection & Execution & Halt \\ \hline
-  Action    &  & x &   &   \\
-  Detection &  &   & x & x \\
-  Execution & x&   &   & x \\
-  Halt      &  &   &   &   \\
+            & Opened & Closed & Grasped \\ \hline
+  Open      & x & GripperClose & GripperCalibrate \\
+  Close     & GripperOpen & x  & GripperCalibrate \\
+  Grasp     & GripperOpen & GripperClose & GripperCalibrate \\
+  
 \end{tabular}
 
 \end{frame}
