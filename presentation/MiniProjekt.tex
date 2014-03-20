@@ -136,7 +136,7 @@ In this mini project, we aim to test the youbot-py with our own interface and im
             & Opened & Closed & Grasped \\ \hline
   Opened      & x & GripperClose & GripperCalibrate(x) \\
   Closed     & GripperOpen & x  & GripperCalibrate(x) \\
-  Grasp     & GripperOpen & GripperClose & GripperCalibrate(x) \\
+  Grasped     & GripperOpen & GripperClose & GripperCalibrate(x) \\
   
 \end{tabular}
 \end{frame}
@@ -149,59 +149,10 @@ In this mini project, we aim to test the youbot-py with our own interface and im
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]
- \frametitle{Requirements}
- \framesubtitle{youbot-py\textbackslash src\textbackslash libbinding\textbackslash binding.h}
-\begin{lstlisting}[language=C++]
-#include <youbot/YouBotManipulator.hpp>
-class Arm
-{
-public :
-	/*[..]*/
-	void GripperOpen(){this->youBotArm->getArmGripper().open();};
-	void GripperClose(){this->youBotArm->getArmGripper().close();};
-};
-\end{lstlisting}
-\end{frame}
 
 
-\begin{frame}[fragile]
- \frametitle{Requirements}
- \framesubtitle{youbot-py\textbackslash src\textbackslash libbinding\textbackslash binding.cpp}
-\begin{lstlisting}[language=C++]
-//Initialization
-Arm::Arm() {
 
-	this->youBotArm =
-	   new youbot::YouBotManipulator("youbot-manipulator");
-	this->youBotArm->doJointCommutation();
-	this->youBotArm->calibrateManipulator();
-	this->youBotArm->calibrateGripper();
 
-	calib = 0;
-	invalidate_calib = 0;
-}
- \end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]
- \frametitle{Requirements}
- \framesubtitle{youbot-py\textbackslash src\textbackslash libbinding\textbackslash binding.cpp}
-\begin{lstlisting}[language=C++]
-//Linking
-BOOST_PYTHON_MODULE(youbot)
-{
-    using namespace boost::python;
-    numeric::array::set_module_and_type("numpy", "ndarray"); 
-    import_array();
-    class_<YOUBOTPYTHON::Arm, boost::noncopyable>("arm",init<>())
-
-	/*[..]*/
-	.def("GripperOpen", &Arm::GripperOpen)
-	.def("GripperClose", &Arm::GripperClose)
-	.def("Reset", &Arm::Reset);
-\end{lstlisting}
-\end{frame}
 
 
 
@@ -230,44 +181,30 @@ BOOST_PYTHON_MODULE(youbot)
  
 \end{frame}
 
-
 \begin{frame}[fragile]
  \frametitle{Code}
- \framesubtitle{binding.h}
+ \framesubtitle{youbot-py\textbackslash src\textbackslash libbinding\textbackslash binding.cpp}
 \begin{lstlisting}[language=C++]
-namespace YOUBOTPYTHON{
-using namespace boost::python;
+//Initialization
+Arm::Arm() {
 
-class PyRobotArm;
+	this->youBotArm =
+	   new youbot::YouBotManipulator("youbot-manipulator");
+	this->youBotArm->doJointCommutation();
+	this->youBotArm->calibrateManipulator();
+	this->youBotArm->calibrateGripper();
 
-class Arm {
-public:
-    Arm();
-    uint8_t calib;
-    /*[..]*/
-
-    /*Miniproject additions*/
-    Gripper();
-    bool setConfigurationParameter(const object& o);
-    open();
-    close();
-    /*for later implementation*/
-    /*object getGripperBar1();
-    object getData(const object& o);
-    bool setData(const object& o);
-    object getConfigurationParameter(const object& o);	
-    object getGripperBar2();
-    bool setValueToMotorContoller();
-    object retrieveValueFromMotorContoller(const object& o);
-    */
-};
-\end{lstlisting} 
+	calib = 0;
+	invalidate_calib = 0;
+}
+ \end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]
  \frametitle{Code}
- \framesubtitle{binding.cpp}
+ \framesubtitle{youbot-py\textbackslash src\textbackslash libbinding\textbackslash binding.cpp}
 \begin{lstlisting}[language=C++]
+//Linking
 BOOST_PYTHON_MODULE(youbot)
 {
     using namespace boost::python;
@@ -275,29 +212,28 @@ BOOST_PYTHON_MODULE(youbot)
     import_array();
     class_<YOUBOTPYTHON::Arm, boost::noncopyable>("arm",init<>())
 
-      .def("CalibrateStandard", &Arm::startcalib)
-      /*[..]*/
-      .def("Reset", &Arm::Reset);
-
-      /*Miniproject additions*/
-      .def("getData", &Gripper::getData)
-      .def("setData", &Gripper::getData)
-      .def("open", &Gripper::open)
-      .def("close", &Gripper::close)
-      .def("setConfigurationParameter"
-         &Gripper::setConfigurationParameter)
-      /*for later implementation*/
-      /*.def("getConfigurationParameter",
-         &Gripper::getConfigurationParameter)
-      .def("getGripperBar1", &Gripper::getGripperBar1)
-      .def("getGripperBar2", &Gripper::getGripperBar2)
-      .def("setValueToMotorContoller",
-         &Gripper::setValueToMotorContoller)
-      .def("retrieveValueFromMotorContoller",
-         &Gripper::retrieveValueFromMotorContoller)
-      */
-\end{lstlisting} 
+	/*[..]*/
+	.def("GripperOpen", &Arm::GripperOpen)
+	.def("GripperClose", &Arm::GripperClose)
+	.def("Reset", &Arm::Reset);
+\end{lstlisting}
 \end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Code}
+ \framesubtitle{youbot-py\textbackslash src\textbackslash libbinding\textbackslash binding.h}
+\begin{lstlisting}[language=C++]
+#include <youbot/YouBotManipulator.hpp>
+class Arm
+{
+public :
+	/*[..]*/
+	void GripperOpen(){this->youBotArm->getArmGripper().open();};
+	void GripperClose(){this->youBotArm->getArmGripper().close();};
+};
+\end{lstlisting}
+\end{frame}
+
 
 \begin{frame}
  \frametitle{Test}
