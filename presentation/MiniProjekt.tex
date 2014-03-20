@@ -119,12 +119,22 @@ In this mini project we aim to test the youbot-py with our own interface and imp
  \frametitle{Problem}
  \framesubtitle{Transition Diagramm}
 
- \begin{tabular}{ l | c c c }
-            & Opened & Closed & Gripped \\ \hline
-  Opened    & - & g-hold() & g-calibrate(x, y) \\
-  Closed    & g-release & - & g-calibrate(x, y) \\
-  Gripped   & g-select() & g-hold() & g-calibrate(x, y)
-  \end{tabular}
+
+
+
+
+
+
+}
+=======
+ \begin{tabular}{ l | c c c c }
+            & Opened & Closed & Grasped \\ \hline
+  Open      & x & GripperClose & GripperCalibrate \\
+  Close     & GripperOpen & x  & GripperCalibrate \\
+  Grasp     & GripperOpen & GripperClose & GripperCalibrate \\
+  
+\end{tabular}
+>>>>>>> b0f8f45c9591cbaf1044df904d04aa8fb2001bd1
 
 \end{frame}
 
