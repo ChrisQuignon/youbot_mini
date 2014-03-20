@@ -118,13 +118,14 @@ In this mini project we aim to test the youbot-py with our own interface and imp
  \begin{frame}
  \frametitle{Problem}
  \framesubtitle{Transition Diagramm}
- \begin{tabular}{ l | c c c }
+ \begin{tabular}{ l | c c c c }
             & Opened & Closed & Grasped \\ \hline
   Open      & x & GripperClose & GripperCalibrate \\
   Close     & GripperOpen & x  & GripperCalibrate \\
   Grasp     & GripperOpen & GripperClose & GripperCalibrate \\
   
 \end{tabular}
+>>>>>>> b0f8f45c9591cbaf1044df904d04aa8fb2001bd1
 
 \end{frame}
 
@@ -146,9 +147,9 @@ In this mini project we aim to test the youbot-py with our own interface and imp
  \framesubtitle{Class Diagram}
   \begin{figure}[ht!]
   \centering
-  %\includegraphics[width=90mm]{uml.jpeg}
+  \includegraphics[width=70mm]{img/classdiagram.jpg}
   \caption{}
-  \label{overflow}
+  \label{Class Diagram}
   \end{figure}
  
 \end{frame}
@@ -189,7 +190,7 @@ public:
 
 \begin{frame}[fragile]
  \frametitle{Code}
- \framesubtitle{BINDING.CPP}
+ \framesubtitle{binding.cpp}
 \begin{lstlisting}[language=C++]
 BOOST_PYTHON_MODULE(youbot)
 {
