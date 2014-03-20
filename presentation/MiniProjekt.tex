@@ -5,9 +5,9 @@
 \usepackage[utf8]{inputenc}
 \usepackage{default}
 %\usepackage{natbib}
+\usepackage{graphicx}
 \usepackage{listings}
 %\usepackage{fontspec}
-\usepackage{graphicx}
 \DeclareFontShape{OT1}{cmtt}{bx}{n}{<5><6><7><8><9><10><10.95><12><14.4><17.28><20.74><24.88>cmttb10}{}
 
 \lstset{language=C++,
@@ -103,7 +103,7 @@ In this mini project we aim to test the youbot-py with our own interface and imp
 
 
 \begin{frame}
- \frametitle{UML}
+ \frametitle{Problem}
  \framesubtitle{State Diagram}
 
  \begin{figure}[ht!]
@@ -116,7 +116,7 @@ In this mini project we aim to test the youbot-py with our own interface and imp
  
  
  \begin{frame}
- \frametitle{UML}
+ \frametitle{Problem}
  \framesubtitle{Transition Diagramm}
 
  \begin{tabular}{ l | c c c }
@@ -129,7 +129,7 @@ In this mini project we aim to test the youbot-py with our own interface and imp
 \end{frame}
 
 \begin{frame}
- \frametitle{UML}
+ \frametitle{Design}
  \framesubtitle{Components Diagram}
 %MANDATORY
   \begin{figure}[ht!]
@@ -142,7 +142,7 @@ In this mini project we aim to test the youbot-py with our own interface and imp
 
 
 \begin{frame}
- \frametitle{UML}
+ \frametitle{Design}
  \framesubtitle{Class Diagram}
   \begin{figure}[ht!]
   \centering
@@ -152,6 +152,72 @@ In this mini project we aim to test the youbot-py with our own interface and imp
   \end{figure}
  
 \end{frame}
+
+
+\begin{frame}[fragile]
+ \frametitle{Code}
+ \framesubtitle{binding.h}
+\begin{lstlisting}[language=C++]
+namespace YOUBOTPYTHON{
+using namespace boost::python;
+
+class PyRobotArm;
+
+class Arm {
+public:
+    Arm();
+    uint8_t calib;
+    /*[..]*/
+
+    /*Miniproject additions*/
+    Gripper();
+    bool setConfigurationParameter(const object& o);
+    open();
+    close();
+    /*for later implementation*/
+    /*object getGripperBar1();
+    object getData(const object& o);
+    bool setData(const object& o);
+    object getConfigurationParameter(const object& o);	
+    object getGripperBar2();
+    bool setValueToMotorContoller();
+    object retrieveValueFromMotorContoller(const object& o);
+    */
+};
+\end{lstlisting} 
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Code}
+ \framesubtitle{BINDING.CPP}
+\begin{lstlisting}[language=C++]
+BOOST_PYTHON_MODULE(youbot)
+{
+    using namespace boost::python;
+    numeric::array::set_module_and_type("numpy", "ndarray"); 
+    import_array();
+    class_<YOUBOTPYTHON::Arm, boost::noncopyable>("arm",init<>())
+
+      .def("CalibrateStandard", &Arm::startcalib)
+      /*[..]*/
+      .def("Reset", &Arm::Reset);
+
+      /*Miniproject additions*/
+      .def("getData", &Gripper::getData)
+      .def("setData", &Gripper::getData)
+      .def("open", &Gripper::open)
+      .def("close", &Gripper::close)
+      .def("setConfigurationParameter", &Gripper::setConfigurationParameter)
+      /*for later implementation*/
+      /*.def("getConfigurationParameter", &Gripper::getConfigurationParameter)
+      .def("getGripperBar1", &Gripper::getGripperBar1)
+      .def("getGripperBar2", &Gripper::getGripperBar2)
+      .def("setValueToMotorContoller", &Gripper::setValueToMotorContoller)
+      .def("retrieveValueFromMotorContoller", &Gripper::retrieveValueFromMotorContoller)
+      */
+\end{lstlisting} 
+\end{frame}
+
 
 %\begin{frame}
 %        \frametitle{Reference}
