@@ -108,9 +108,9 @@ In this mini project we aim to test the youbot-py with our own interface and imp
 
  \begin{figure}[ht!]
   \centering
-  \includegraphics[width=90mm]{uml.jpeg}
+  \includegraphics[width=90mm]{img/statechart.png}
   \caption{}
-  \label{overflow}
+  \label{State Diagram Of The Gripper}
   \end{figure} 
  \end{frame}
  
@@ -119,13 +119,12 @@ In this mini project we aim to test the youbot-py with our own interface and imp
  \frametitle{UML}
  \framesubtitle{Transition Diagramm}
 
- \begin{tabular}{ l | c c c c }
-            & Action & Detection & Execution & Halt \\ \hline
-  Action    &  & x &   &   \\
-  Detection &  &   & x & x \\
-  Execution & x&   &   & x \\
-  Halt      &  &   &   &   \\
-\end{tabular}
+ \begin{tabular}{ l | c c c }
+            & Opened & Closed & Gripped \\ \hline
+  Opened    & - & g-hold() & g-calibrate(x, y) \\
+  Closed    & g-release & - & g-calibrate(x, y) \\
+  Gripped   & g-select() & g-hold() & g-calibrate(x, y)
+  \end{tabular}
 
 \end{frame}
 
